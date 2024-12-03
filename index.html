@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>متجر النسر</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f8f8;
+            color: #333;
+        }
+
+        header {
+            background-color: #333;
+            color: white;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .store-info {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .store-name {
+            font-size: 30px;
+            font-weight: bold;
+        }
+
+        .contact {
+            font-size: 20px;
+            margin-top: 5px;
+        }
+
+        .toggle-buttons {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .theme-toggle, .language-toggle {
+            padding: 10px 15px;
+            font-size: 14px;
+            background-color: #555;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin: 5px 0;
+        }
+
+        .theme-toggle:hover, .language-toggle:hover {
+            background-color: #777;
+        }
+
+        nav {
+            background-color: #555;
+            display: flex;
+            justify-content: center;
+            padding: 10px 0;
+        }
+
+        nav button {
+            background-color: #333;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            margin: 0 10px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        nav button:hover {
+            background-color: #ffcc00;
+        }
+
+        .container {
+            width: 80%;
+            margin: 20px auto;
+        }
+
+        .section {
+            display: none;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        .product {
+            text-align: center;
+            margin: 20px auto;
+            padding: 10px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+            display: inline-block;
+            width: 280px;
+        }
+
+        .product:hover {
+            transform: scale(1.05);
+        }
+
+        .product img {
+            width: 100%;
+            height: auto;
+            margin-bottom: 10px;
+            border-radius: 5px;
+        }
+
+        .color-options {
+            display: flex;
+            justify-content: center;
+            margin-top: 15px;
+        }
+
+        .color-options button {
+            width: 30px;
+            height: 30px;
+            margin: 0 5px;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            outline: none;
+        }
+
+        .color-options button.red {
+            background-color: rgb(133, 163, 72);
+        }
+
+        .color-options button.black {
+            background-color: black;
+        }
+
+        .color-options button.white {
+            background-color: white;
+            border: 1px solid #ddd;
+        }
+
+        .product.selected {
+            transform: scale(1.1);
+            border-color: #ffcc00;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+
+        .dark-mode {
+            background-color: #121212;
+            color: #f8f8f8;
+        }
+
+        .dark-mode .product {
+            background-color: #1f1f1f;
+            border-color: #333;
+        }
+
+        .dark-mode header {
+            background-color: #1f1f1f;
+        }
+
+        .order-now-btn {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #ffcc00;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            margin-top: 20px;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .order-now-btn:hover {
+            background-color: #e6b800;
+        }
+
+        .order-now-container {
+            margin-top: 25px;
+        }
+    </style>
+</head>
+<body>
+    <!-- الهيدر -->
+    <header>
+        <div class="store-info">
+            <div class="store-name" id="storeName">متجر النسر</div>
+            <div class="contact" id="contact">رقم التواصل: 01280440587</div>
+        </div>
+        <div class="toggle-buttons">
+            <button class="theme-toggle" onclick="toggleTheme()">تبديل الوضع</button>
+            <button class="language-toggle" onclick="toggleLanguage()">تبديل اللغة</button>
+        </div>
+    </header>
+
+    <!-- شريط التنقل -->
+    <nav>
+        <button onclick="showSection('pants')" id="pantsButton">قسم البناطيل</button>
+        <button onclick="showSection('hoodies')" id="hoodiesButton">قسم الهودي</button>
+        <button onclick="showSection('jackets')" id="jacketsButton">قسم الجواكيت</button>
+    </nav>
+
+    <!-- قسم البناطيل -->
+    <div id="pants" class="section active">
+        <h2 id="pantsHeader">قسم البناطيل</h2>
+        <!-- أربع خانات -->
+        <div class="product" id="pants1">
+            <img src="index (10).jpg" alt="بنطلون" id="pantsImage1">
+            <h3 id="pantsName1">بنطلون ميلتون قطن وفي منه وايت لج </h3>
+            <p id="pantsPrice1">السعر: 200 جنيه</p>
+            <div class="color-options">
+                <button class="black" onclick="changeColor('pantsImage1', 'index (10).jpg')"></button>
+                <button class="white" onclick="changeColor('pantsImage1', 'index (11).jpg')"></button>
+                <button class="red" onclick="changeColor('pantsImage1', 'index (9).jpg')"></button>
+            </div>
+            <div class="order-now-container">
+                <a href="https://wa.me/qr/X22R4RHUHMJ4K1" class="order-now-btn" target="_blank">اطلب الآن</a>
+            </div>
+        </div>
+        <div class="product" id="pants2">
+            <img src="index (12).jpg" alt="بنطلون" id="pantsImage2">
+            <h3 id="pantsName2">بنطلون خامه بسكوته تحفه استك  </h3>
+            <p id="pantsPrice2">السعر: 240 جنيه</p>
+            <div class="color-options">
+                <button class="black" onclick="changeColor('pantsImage2', 'index (12).jpg')"></button>
+                <button class="white" onclick="changeColor('pantsImage2', 'index (14).jpg')"></button>
+                <button class="red" onclick="changeColor('pantsImage2', 'index (13).jpg')"></button>
+            </div>
+            <div class="order-now-container">
+                <a href="https://wa.me/qr/X22R4RHUHMJ4K1" class="order-now-btn" target="_blank">اطلب الآن</a>
+            </div>
+        </div>
+        <div class="product" id="pants3">
+            <img src="index (1).jpg" alt="بنطلون" id="pantsImage3">
+            <h3 id="pantsName3">بنطلون خامه بسكوته تحففه رجل واسعه </h3>
+            <p id="pantsPrice3">السعر: 260 جنيه</p>
+            <div class="color-options">
+                <button class="black" onclick="changeColor('pantsImage3', 'index (1).jpg')"></button>
+                <button class="white" onclick="changeColor('pantsImage3', 'index (2).jpg')"></button>
+                <button class="red" onclick="changeColor('pantsImage3', 'index (3).jpg')"></button>
+            </div>
+            <div class="order-now-container">
+                <a href="https://wa.me/qr/X22R4RHUHMJ4K1" class="order-now-btn" target="_blank">اطلب الآن</a>
+            </div>
+        </div>
+        <div class="product" id="pants4">
+            <img src="index (4).jpg" alt="بنطلون" id="pantsImage4">
+            <h3 id="pantsName4">بنطلون ميلتون قطن ينفع كل حاجه </h3>
+            <p id="pantsPrice4">في منه اطفالي , شبابي , رجالي  كل متوفر اسود,كحلي,رمادي </p>
+            <p id="pantsPrice4">السعر: من150 الي270 علي حسب المقاس </p>
+            <div class="color-options">
+                <button class="black" onclick="changeColor('pantsImage4', 'index (16).jpg')"></button>
+                <button class="white" onclick="changeColor('pantsImage4', 'index (15).jpg')"></button>
+                <button class="red" onclick="changeColor('pantsImage4', 'index (17).jpg')"></button>
+            </div>
+            <div class="order-now-container">
+                <a href="https://wa.me/qr/X22R4RHUHMJ4K1" class="order-now-btn" target="_blank">اطلب الآن</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- قسم الهودي -->
+    <div id="hoodies" class="section">
+        <h2 id="hoodiesHeader">قسم الهودي</h2>
+        <!-- أربع خانات -->
+        <div class="product" id="hoodie1">
+            <img src="index (6).jpg" alt="هودي" id="hoodieImage1">
+            <h3 id="hoodieName1">هودي ساده خامه قطن تحفه </h3>
+            <p id="hoodiePrice1">السعر: 450 جنيه</p>
+            <div class="color-options">
+                <button class="black" onclick="changeColor('hoodieImage1', 'index (6).jpg')"></button>
+                <button class="white" onclick="changeColor('hoodieImage1', 'index (5).jpg')"></button>
+                <button class="red" onclick="changeColor('hoodieImage1', 'index (8).jpg')"></button>
+            </div>
+            <div class="order-now-container">
+                <a href="https://wa.me/qr/X22R4RHUHMJ4K1" class="order-now-btn" target="_blank">اطلب الآن</a>
+            </div>
+        </div>
+        <div class="product" id="hoodie2">
+            <img src="hoodie-black.jpg" alt="هودي" id="hoodieImage2">
+            <h3 id="hoodieName2"></h3>
+            <p id="hoodiePrice2">السعر:  جنيه</p>
+            <div class="color-options">
+                <button class="black" onclick="changeColor('hoodieImage2', 'hoodie-black.jpg')"></button>
+                <button class="white" onclick="changeColor('hoodieImage2', 'hoodie-white.jpg')"></button>
+                <button class="red" onclick="changeColor('hoodieImage2', 'hoodie-red.jpg')"></button>
+            </div>
+            <div class="order-now-container">
+                <a href="https://wa.me/qr/X22R4RHUHMJ4K1" class="order-now-btn" target="_blank">اطلب الآن</a>
+            </div>
+        </div>
+        <div class="product" id="hoodie3">
+            <img src="hoodie-black.jpg" alt="هودي" id="hoodieImage3">
+            <h3 id="hoodieName3"></h3>
+            <p id="hoodiePrice3"></p>
+            <div class="color-options">
+                <button class="black" onclick="changeColor('hoodieImage3', 'hoodie-black.jpg')"></button>
+                <button class="white" onclick="changeColor('hoodieImage3', 'hoodie-white.jpg')"></button>
+                <button class="red" onclick="changeColor('hoodieImage3', 'hoodie-red.jpg')"></button>
+            </div>
+            <div class="order-now-container">
+                <a href="https://wa.me/qr/X22R4RHUHMJ4K1" class="order-now-btn" target="_blank">اطلب الآن</a>
+            </div>
+        </div>
+        <div class="product" id="hoodie4">
+            <img src="hoodie-black.jpg" alt="هودي" id="hoodieImage4">
+            <h3 id="hoodieName4"></h3>
+            <p id="hoodiePrice4"></p>
+            <div class="color-options">
+                <button class="black" onclick="changeColor('hoodieImage4', 'hoodie-black.jpg')"></button>
+                <button class="white" onclick="changeColor('hoodieImage4', 'hoodie-white.jpg')"></button>
+                <button class="red" onclick="changeColor('hoodieImage4', 'hoodie-red.jpg')"></button>
+            </div>
+            <div class="order-now-container">
+                <a href="https://wa.me/qr/X22R4RHUHMJ4K1" class="order-now-btn" target="_blank">اطلب الآن</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- قسم الجواكيت -->
+    <div id="jackets" class="section">
+        <h2 id="jacketsHeader">قسم الجواكيت</h2>
+        <!-- أربع خانات -->
+        <div class="product" id="jacket1">
+            <img src="index (18).jpg" alt="جاكيت" id="jacketImage1">
+            <h3 id="jacketName1">جاكيت باطلو هاف جوخ خامه ولا اروع الصور بي تتكلم عن نفسه </h3>
+            <p id="jacketPrice1">السعر: 540 جنيه</p>
+            <div class="color-options">
+                <button class="black" onclick="changeColor('jacketImage1', 'index (23).jpg')"></button>
+                <button class="white" onclick="changeColor('jacketImage1', 'index (24).jpg')"></button>
+                <button class="red" onclick="changeColor('jacketImage1', 'index (19).jpg')"></button>
+            </div>
+            <div class="order-now-container">
+                <a href="https://wa.me/qr/X22R4RHUHMJ4K1" class="order-now-btn" target="_blank">اطلب الآن</a>
+            </div>
+        </div>
+        <div class="product" id="jacket2">
+            <img src="index (25).jpg" alt="جاكيت" id="jacketImage2">
+            <h3 id="jacketName2">جاكيت هاف جوخ خامه صوف </h3>
+            <p id="jacketPrice2">السعر: 520 جنيه</p>
+            <div class="color-options">
+                <button class="black" onclick="changeColor('jacketImage2', 'index (25).jpg')"></button>
+                <button class="white" onclick="changeColor('jacketImage2', 'index (21).jpg')"></button>
+                <button class="red" onclick="changeColor('jacketImage2', 'index (22).jpg')"></button>
+            </div>
+            <div class="order-now-container">
+                <a href="https://wa.me/qr/X22R4RHUHMJ4K1" class="order-now-btn" target="_blank">اطلب الآن</a>
+            </div>
+        </div>
+        <div class="product" id="jacket3">
+            <img src="jacket-black.jpg" alt="جاكيت" id="jacketImage3">
+            <h3 id="jacketName3">جاكيت هاف كوخ طويل خامه صوف</h3>
+            <p id="jacketPrice3">السعر: 600 جنيه</p>
+            <div class="color-options">
+                <button class="black" onclick="changeColor('jacketImage3', 'jacket-black.jpg')"></button>
+                <button class="white" onclick="changeColor('jacketImage3', 'jacket-white.jpg')"></button>
+                <button class="red" onclick="changeColor('jacketImage3', 'jacket-red.jpg')"></button>
+            </div>
+            <div class="order-now-container">
+                <a href="https://wa.me/qr/X22R4RHUHMJ4K1" class="order-now-btn" target="_blank">اطلب الآن</a>
+            </div>
+        </div>
+        <div class="product" id="jacket4">
+            <img src="jacket-black.jpg" alt="جاكيت" id="jacketImage4">
+            <h3 id="jacketName4">جاكيت كاجوال</h3>
+            <p id="jacketPrice4">السعر: 900 جنيه</p>
+            <div class="color-options">
+                <button class="black" onclick="changeColor('jacketImage4', 'jacket-black.jpg')"></button>
+                <button class="white" onclick="changeColor('jacketImage4', 'jacket-white.jpg')"></button>
+                <button class="red" onclick="changeColor('jacketImage4', 'jacket-red.jpg')"></button>
+            </div>
+            <div class="order-now-container">
+                <a href="https://wa.me/qr/X22R4RHUHMJ4K1" class="order-now-btn" target="_blank">اطلب الآن</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- الفوتر -->
+  
+    <script>
+        let currentTheme = "light";
+        let currentLanguage = "ar";
+
+        function toggleTheme() {
+            document.body.classList.toggle("dark-mode");
+            currentTheme = document.body.classList.contains("dark-mode") ? "dark" : "light";
+        }
+
+        function toggleLanguage() {
+            currentLanguage = currentLanguage === 'ar' ? 'en' : 'ar';
+            if (currentLanguage === 'en') {
+                document.getElementById('storeName').innerText = 'Al Nasr Store';
+                document.getElementById('contact').innerText = 'Contact Number: 01280440587';
+                document.getElementById('pantsHeader').innerText = 'Pants Section';
+                document.getElementById('hoodiesHeader').innerText = 'Hoodies Section';
+                document.getElementById('jacketsHeader').innerText = 'Jackets Section';
+                document.getElementById('pantsButton').innerText = 'Pants';
+                document.getElementById('hoodiesButton').innerText = 'Hoodies';
+                document.getElementById('jacketsButton').innerText = 'Jackets';
+                document.getElementById('pantsName1').innerText = 'بنطلون ميلتون قطن وفي منه وايت لج ';
+                document.getElementById('pantsPrice1').innerText = 'Price: 200 EGP';
+                document.getElementById('pantsName2').innerText = 'بنطلون خامه بسكوته تحفه استك  ';
+                document.getElementById('pantsPrice2').innerText = 'Price: 240 EGP';
+                document.getElementById('pantsName3').innerText = 'بنطلون خامه بسكوته تحففه رجل واسعه';
+                document.getElementById('pantsPrice3').innerText = 'Price: 260 EGP';
+                document.getElementById('pantsName4').innerText = 'بنطلون ميلتون قطن ينفع كل حاجه';
+                document.getElementById('pantsPrice4').innerText = 'في منه اطفالي , شبابي , رجالي  كل متوفر اسود,كحلي,رمادي  ';
+                document.getElementById('hoodieName1').innerText = 'plain hoodie';
+                document.getElementById('hoodiePrice1').innerText = 'Price: 450 EGP';
+                document.getElementById('hoodieName2').innerText = '';
+                document.getElementById('hoodiePrice2').innerText = 'Price:  EGP';
+                document.getElementById('hoodieName3').innerText = '';
+                document.getElementById('hoodiePrice3').innerText = 'Price:  EGP';
+                document.getElementById('hoodieName4').innerText = '';
+                document.getElementById('hoodiePrice4').innerText = 'Price:  EGP';
+                document.getElementById('jacketName1').innerText = 'جاكيت باطلو هاف جوخ خامه ولا اروع الصور بي تتكلم عن نفسه';
+                document.getElementById('jacketPrice1').innerText = 'Price: 540 EGP';
+                document.getElementById('jacketName2').innerText = 'Leather Jacket';
+                document.getElementById('jacketPrice2').innerText = 'Price: 520 EGP';
+                document.getElementById('jacketName3').innerText = 'Bomber Jacket';
+                document.getElementById('jacketPrice3').innerText = 'Price: 600 EGP';
+                document.getElementById('jacketName4').innerText = '';
+                document.getElementById('jacketPrice4').innerText = 'Price:  EGP';
+            } else {
+                document.getElementById('storeName').innerText = 'متجر النسر';
+                document.getElementById('contact').innerText = 'رقم التواصل: 01280440587';
+                document.getElementById('pantsHeader').innerText = 'قسم البناطيل';
+                document.getElementById('hoodiesHeader').innerText = 'قسم الهودي';
+                document.getElementById('jacketsHeader').innerText = 'قسم الجواكيت';
+                document.getElementById('pantsButton').innerText = 'قسم البناطيل';
+                document.getElementById('hoodiesButton').innerText = 'قسم الهودي';
+                document.getElementById('jacketsButton').innerText = 'قسم الجواكيت';
+                document.getElementById('pantsName1').innerText = 'بنطلون ميلتون قطن وفي منه وايت لج ';
+                document.getElementById('pantsPrice1').innerText = 'السعر:200  جنيه';
+                document.getElementById('pantsName2').innerText = 'بنطلون خامه بسكوته تحفه استك ';
+                document.getElementById('pantsPrice2').innerText = 'السعر: 240 جنيه';
+                document.getElementById('pantsName3').innerText = 'بنطلون خامه بسكوته تحففه رجل واسعه';
+                document.getElementById('pantsPrice3').innerText = 'السعر: 260 جنيه';
+                document.getElementById('pantsName4').innerText = 'بنطلون ميلتون قطن ينفع كل حاجه';
+                document.getElementById('pantsPrice4').innerText = 'في منه اطفالي , شبابي , رجالي كل متوفر اسود,كحلي,رمادي';
+                document.getElementById('hoodieName1').innerText = 'هودي ساده';
+                document.getElementById('hoodiePrice1').innerText = 'السعر: 450 جنيه';
+                document.getElementById('hoodieName2').innerText = '';
+                document.getElementById('hoodiePrice2').innerText = 'السعر:  جنيه';
+                document.getElementById('hoodieName3').innerText = '';
+                document.getElementById('hoodiePrice3').innerText = 'السعر:  جنيه';
+                document.getElementById('hoodieName4').innerText = '';
+                document.getElementById('hoodiePrice4').innerText = 'السعر:  جنيه';
+                document.getElementById('jacketName1').innerText = 'جاكيت باطلو هاف جوخ خامه ولا اروع الصور بي تتكلم عن نفسه';
+                document.getElementById('jacketPrice1').innerText = 'السعر: 540 جنيه';
+                document.getElementById('jacketName2').innerText = 'جاكيت جلد';
+                document.getElementById('jacketPrice2').innerText = 'السعر: 520 جنيه';
+                document.getElementById('jacketName3').innerText = 'جاكيت بومبر';
+                document.getElementById('jacketPrice3').innerText = 'السعر: 600 جنيه';
+                document.getElementById('jacketName4').innerText = '';
+                document.getElementById('jacketPrice4').innerText = 'السعر:  جنيه';
+            }
+        }
+
+        function showSection(sectionId) {
+            const sections = document.querySelectorAll('.section');
+            sections.forEach(section => {
+                section.classList.remove('active');
+            });
+            document.getElementById(sectionId).classList.add('active');
+        }
+
+        function changeColor(imageId, colorImage) {
+            document.getElementById(imageId).src = colorImage;
+        }
+    </script>
+</body>
+</html>
